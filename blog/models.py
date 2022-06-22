@@ -3,12 +3,6 @@ from django.db import models
 from django.utils import timezone
 
 
-def short(self, tekst):
-    k = ''
-    for i in tekst:
-        k.join(i)
-    return k
-
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -24,3 +18,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def short(self):
+        k = ''
+        coin = 0
+        for i in self.text:
+            k += i
+            coin += 1
+            if coin == 250:
+                k += ' ...'
+                break
+        return k
